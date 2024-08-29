@@ -27,7 +27,7 @@ class StoreProductRequest extends FormRequest
             'price'             => ['required', 'numeric'],
             'description'       => ['required', 'string', 'max:200'],
             'image'             => ['nullable', 'string'],
-            'expiration_date'   => ['required', 'date', 'after:now()'],
+            'expiration_date'   => ['required', 'date', 'after:today'],
             'category_id'       => ['required', 'numeric'],
         ];
     }
