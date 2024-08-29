@@ -13,6 +13,6 @@ class RegisterController extends Controller
     {
         $input  =   $request->validated();
         $user   =   User::create($input);
-        return UserResource::make($user);
+        return response()->json(UserResource::make($user), 201);
     }
 }
