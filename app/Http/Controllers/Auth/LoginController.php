@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Exceptions\LoginInvalidException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginFormRequest;
+use App\Http\Requests\Auth\SignInFormRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-    public function __invoke(LoginFormRequest $request)
+    public function __invoke(SignInFormRequest $request)
     {
         $input = $request->validated();
 
