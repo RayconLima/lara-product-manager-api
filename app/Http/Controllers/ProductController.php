@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\ProductNotFoundException;
+use App\Exceptions\NotFoundException;
 use App\Http\Requests\Product\{StoreProductRequest, UpdateProductRequest};
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -54,7 +54,7 @@ class ProductController extends Controller
     {
         $product = Product::find($productId);
         if(!$product) {
-            throw new ProductNotFoundException();
+            throw new NotFoundException('Product not found');
         }
 
         return $product;
