@@ -63,6 +63,31 @@ class PermissionSeeder extends Seeder
                 'name'  => 'destroy_category',
                 'label' => 'Apagar categoria'
             ],
+            [
+                'id'    => 11,
+                'name'  => 'list_users',
+                'label' => 'Listar usuários'
+            ],
+            [
+                'id'    => 12,
+                'name'  => 'show_user',
+                'label' => 'Mostrar usuário'
+            ],
+            [
+                'id'    => 13,
+                'name'  => 'new_user',
+                'label' => 'Adicionar novo usuário'
+            ],
+            [
+                'id'    => 14,
+                'name'  => 'update_user',
+                'label' => 'Atualizar usuário'
+            ],
+            [
+                'id'    => 15,
+                'name'  => 'destroy_user',
+                'label' => 'Apagar usuário'
+            ],
         ]);
     }
 }
