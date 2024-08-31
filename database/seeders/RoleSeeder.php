@@ -22,8 +22,8 @@ class RoleSeeder extends Seeder
                 'label' => 'Administrador'
             ],
             [
-                'name' => 'user',
-                'label' => 'user'
+                'name' => 'seller',
+                'label' => 'vendedor'
             ]
         ]);
     }

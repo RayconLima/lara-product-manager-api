@@ -30,7 +30,8 @@ class AuthServiceProvider extends ServiceProvider
 
         Permission::with('roles')->get()->each(function ($permission) {
             Gate::define($permission->name, function (User $user) use ($permission) {
-                return $user->hasRole($permission->roles);
+                return $user->roles->intersect($permission->roles)->count();
+                // return $user->hasRole($permission->roles);
             });
         });
     }
