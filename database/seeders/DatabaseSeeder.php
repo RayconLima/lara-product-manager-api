@@ -24,12 +24,40 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RoleSeeder::class,
         ]);
+        $this->setAdmin();
+        $this->setSeller();
+    }
 
-        $roleUser       = $this->role->where('name', 'user')->first();
-        $permissionUser = $this->permission->where('name', 'list_categories')->first();
-        $user           = $this->user->where('id', 1)->first();
-        
-        $roleUser->permissions()->attach($permissionUser);
-        $user->roles()->attach($roleUser);
+    private function setSeller(): void
+    {
+        $user = User::where('name', 'ciclano')->first();
+        $role = Role::where('name', 'seller')->first();
+
+        $permissionsSeller = [
+            'list_products',
+            'show_product',
+            'update_product',
+            'list_categories',
+            'show_category'
+        ];
+
+        $existingPermissions = $role->permissions->pluck('name')->toArray();
+
+        $newPermissions = array_diff($permissionsSeller, $existingPermissions);
+
+        $permissionIds = Permission::whereIn('name', $newPermissions)->pluck('id');
+
+        $role->permissions()->attach($permissionIds);
+
+        $user->roles()->attach($role);
+    }
+    
+    private function setAdmin(): void
+    {
+        $user = User::where('name', 'fulano')->first();
+        $role = Role::where('name', 'admin')->first();
+        $permissions = Permission::all();
+        $role->permissions()->attach($permissions);
+        $user->roles()->attach($role);
     }
 }

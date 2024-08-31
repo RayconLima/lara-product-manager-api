@@ -4,6 +4,7 @@ namespace App\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Validation\Rule;
 
 class StoreProductRequest extends FormRequest
 {
@@ -23,10 +24,10 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'              => ['required', 'string', 'max:50'],
-            'price'             => ['required', 'numeric'],
-            'description'       => ['required', 'string', 'max:200'],
-            'image'             => ['nullable', 'string'],
+            'name'              => ['required', 'string', 'max:50', Rule::unique('products')->ignore($this->id)],
+            'price'             => ['required', 'numeric', 'min:0'],
+            'description'       => ['nullable', 'string', 'max:200'],
+            'image'             => ['nullable', 'image', Rule::unique('products')->ignore($this->id)],
             'expiration_date'   => ['required', 'date', 'after:today'],
             'category_id'       => ['required', 'numeric'],
         ];

@@ -26,7 +26,7 @@ class UpdateProductRequest extends FormRequest
         return [
             'name'              => ['required', 'string', 'max:50'],
             'price'             => ['required', 'numeric'],
-            'description'       => ['required', 'string', 'max:200'],
+            'description'       => ['nullable', 'string', 'max:200'],
             'image'             => ['nullable', 'string'],
             'expiration_date'   => ['required', 'date', 'after:now()'],
             'category_id'       => ['required', 'numeric'],
