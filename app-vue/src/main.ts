@@ -1,5 +1,9 @@
 import { createApp } from 'vue'
-import './style.css'
+import './ui/assets/css/tailwind.css'
 import App from './App.vue'
-
-createApp(App).mount('#app')
+import router from './routes';
+import pinia from './config/plugins/pinia';
+const app = createApp(App)
+app.use(router)
+app.use(pinia)
+app.mount('#app')
