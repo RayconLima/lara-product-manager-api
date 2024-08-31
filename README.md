@@ -18,8 +18,8 @@ Antes de começar a usar este projeto, é necessário ter o seguinte configurado
 - Categoria de produto
 
 ## Atividades
-- [ ]  - Registro de produtos
-- [ ]  - Registro de categorias
+- [x]  - Registro de produtos
+- [x]  - Registro de categorias
 - [ ]  - Desenvolver uma função automatizada para salvar os dados da api externa ao banco de dados
 
 ## Instalação

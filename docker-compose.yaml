@@ -11,7 +11,7 @@ services:
         depends_on:
             - redis
         networks:
-            - lara-makeup-api
+            - product-manager-api
 
     # nginx
     nginx:
@@ -23,7 +23,7 @@ services:
             - ./:/var/www
             - ./docker/nginx/:/etc/nginx/conf.d/
         networks:
-            - lara-makeup-api
+            - product-manager-api
 
     # db mysql
     mysql:
@@ -39,7 +39,7 @@ services:
         ports:
             - "3340:3306"
         networks:
-            - lara-makeup-api
+            - product-manager-api
     # phpmyadmin
     phpmyadmin:
         image: phpmyadmin/phpmyadmin:5.0.2
@@ -58,7 +58,7 @@ services:
         volumes:
             - .docker/phpmyadmin/data/sessions:/sessions
         networks:
-            - lara-makeup-api
+            - product-manager-api
     # queue
     queue:
         image: especializati/laravel9-app
@@ -69,13 +69,13 @@ services:
             - redis
             - app
         networks:
-            - lara-makeup-api
+            - product-manager-api
     # redis
     redis:
         image: redis:latest
         networks:
-            - lara-makeup-api
+            - product-manager-api
 
 networks:
-    lara-makeup-api:
+    product-manager-api:
         driver: bridge
