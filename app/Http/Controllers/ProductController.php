@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Exceptions\NotFoundException;
 use App\Http\Resources\ProductResource;
 use App\Http\Requests\Product\{StoreProductRequest, UpdateProductRequest};
-
+use Illuminate\Support\Str;
 class ProductController extends Controller
 {
     public function index(Request $request)
@@ -27,11 +27,10 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
-        Gate::authorize('new_product', Product::class);
+        // Gate::authorize('new_product', Product::class);
         $input = $request->validated();
-
         // Handle image upload
-        if ($request->hasFile('image')) {
+        if ($input['image']) {
             $image = $request->file('image');
             $originalFilename = $image->getClientOriginalName();
             $extension = $image->getClientOriginalExtension();
