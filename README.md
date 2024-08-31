@@ -1,4 +1,3 @@
-
 # Desafio Full Stack
 
 ## Descrição
@@ -15,15 +14,17 @@ Antes de começar a usar este projeto, é necessário ter o seguinte configurado
 
 ## Funcionalidades
 - Produtos
-- Categoria de produto
+- Categoria
+- Usuários
+- Papéis
+- Permissões
 
 ## Atividades
-- [x]  - Registro de produtos
-- [x]  - Registro de categorias
-- [ ]  - Desenvolver uma função automatizada para salvar os dados da api externa ao banco de dados
+- [x]   - Registro de produtos
+- [x]   - Registro de categorias
+- [x]   - Teste de integração
 
 ## Instalação
-
 Siga as etapas abaixo para configurar o projeto em seu ambiente local:
 
 1. Clone este repositório para sua máquina local:
@@ -73,6 +74,5 @@ php artisan migrate
 ```
 php artisan db:seed
 ```
-
 
 O projeto estará acessível em `http://localhost:8099`.
