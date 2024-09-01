@@ -3,7 +3,8 @@ import ProductsService from "../infra/services/products.service";
 
 export const useProductStore = defineStore('product', {
     state: () => ({
-        products: []
+        products: [],
+        product: {}
     }),
     actions: {
         async getProducts() {
@@ -17,6 +18,13 @@ export const useProductStore = defineStore('product', {
                 .storeProduct(params)
                 .then((response: any) => {
                     return this.products = response.data.data;
+                })
+        },
+        async getProduct(id: number) {
+            await ProductsService
+                .getProduct(id)
+                .then((response: any) => {
+                    return this.product = response.data.data;
                 })
         },
         destroyProduct(id: number) {
