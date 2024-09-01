@@ -18,7 +18,7 @@ export default class ProductsService extends BaseService {
     static async storeProduct(params: any) {
         return new Promise(async (resolve, reject) => {
             await this.request({ auth: false })
-                .post('products', {...params, name: params.label.toLowerCase().trim()})
+                .post('products', params)
                 .then((response:any) => resolve(response))
                 .catch((error: any) => reject(error.response))
         })

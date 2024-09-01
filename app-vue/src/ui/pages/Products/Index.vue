@@ -1,6 +1,8 @@
 <template>
     <div class="container">
-        <Breadcrumb title="Produtos"></Breadcrumb>
+        <Breadcrumb title="Produtos">
+            <CreateProduct />
+        </Breadcrumb>
 
         <div
             class="w-full p-2 text-center bg-white rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 max-h-full">
@@ -18,7 +20,7 @@
                     </thead>
                     <tbody>
                         <tr class="bg-white dark:bg-gray-800 dark:border-gray-700" v-for="product in products"
-                            :key="product.id">
+                            :key="product?.id">
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ product?.name }}
                             </td>
@@ -26,10 +28,13 @@
                                 {{ product?.category?.name }}
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ product.price }}
+                                {{ product?.price }}
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ product.expiration_date }}
+                                {{ product?.expiration_date }}
+                            </td>
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <button class="px-1 py-1 font-bold text-white bg-red-500 rounded hover hover:bg-red-700" @click.stop.prevent="destroyProduct(product.id)">Remover</button>
                             </td>
                         </tr>
                     </tbody>
@@ -39,6 +44,7 @@
     </div>
 </template>
 <script>
+import CreateProduct from './Create.vue'
 import Breadcrumb from '../../components/Breadcrumb.vue';
 import { computed, onMounted } from 'vue';
 import { useProductStore } from "../../../store/products";
@@ -47,16 +53,23 @@ export default {
     name: 'Products',
     components: {
         Breadcrumb,
+        CreateProduct
     },
     setup() {
-        const products = computed(() => useProductStore().products);
+        const productStore  = useProductStore();
+        const products      = computed(() => useProductStore().products);
 
         onMounted(() => {
             useProductStore().getProducts();
         });
 
+        const destroyProduct = (id) => {
+            productStore.destroyProduct(id)
+        }
+
         return {
             products,
+            destroyProduct
         }
     }
 }
