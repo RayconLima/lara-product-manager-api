@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Exceptions\LoginInvalidException;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\SignInFormRequest;
-use App\Http\Resources\UserResource;
+use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Auth\SignInFormRequest;
+use App\Exceptions\{LoginInvalidException, InternalServerException};
 
 class LoginController extends Controller
 {
@@ -19,11 +20,15 @@ class LoginController extends Controller
         if (!auth()->attempt($input)) {
             throw new LoginInvalidException();
         }
-        
-        session()->regenerate();
-        $data = $this->authenticate($input['email'], $input['password']);
 
-        return UserResource::make($data['user'])->additional($data['token']);
+        try {    
+            session()->regenerate();
+            $data = $this->authenticate($input['email'], $input['password']);
+    
+            return UserResource::make($data['user'])->additional($data['token']);
+        } catch (Exception $e) {
+            throw new InternalServerException();
+        }
     }
 
     private function authenticate($email, $password)
