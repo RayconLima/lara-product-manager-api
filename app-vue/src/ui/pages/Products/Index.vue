@@ -34,7 +34,8 @@
                                 {{ product?.expiration_date }}
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <button class="px-1 py-1 font-bold text-white bg-red-500 rounded hover hover:bg-red-700" @click.stop.prevent="destroyProduct(product.id)">Remover</button>
+                                <router-link class="px-1 py-1 font-bold text-white bg-blue-500 rounded hover hover:bg-blue-700 mr-2" :to="{ name: 'products.show', params: { id: product?.id } }">Visualizar</router-link>
+                                <button class="px-1 py-1 font-bold text-white bg-red-500 rounded hover hover:bg-red-700" @click.stop.prevent="destroyProduct(product?.id)">Remover</button>
                             </td>
                         </tr>
                     </tbody>
