@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <Breadcrumb :title="product?.name" />
+        <Breadcrumb title="products" routeName="products.index" routeSingleName="products.show" :data="product" />
         <div class="mb-4 w-full mr-4">
             <div class="container flex bg-white rounded-md shadow-md">
                 <div>
@@ -9,7 +9,7 @@
                         <li><span class="px-2 py-2 text-gray-500 font-semibold">Categoria:</span> {{ product?.category?.name }}</li>
                         <li><span class="px-2 py-2 text-gray-500 font-semibold">Preço:</span> {{ product?.price }}</li>
                         <li><span class="px-2 py-2 text-gray-500 font-semibold">Descrição:</span> {{ product?.description }}</li>
-                        <li><span class="px-2 py-2 text-gray-500 font-semibold">Preço:</span> {{ product?.expiration_date }}</li>
+                        <li><span class="px-2 py-2 text-gray-500 font-semibold">Data de validade:</span> {{ product?.expiration_date }}</li>
                     </ul>
                 </div>
             </div>
