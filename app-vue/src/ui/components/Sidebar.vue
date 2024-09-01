@@ -28,7 +28,7 @@
               </ul>
             </li>
           </template>
-          <template v-else-if="groupName !== 'geral' && !isClient && !shouldRenderGroup(items)">
+          <template v-else-if="groupName !== 'geral' && shouldRenderGroup(items)">
             <li>
               <button type="button" v-if="items.title"
                 class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
@@ -95,8 +95,7 @@
       const isRouteActive = (routeName) => {
         return router.currentRoute.value.name === routeName;
       };
-  
-  
+    
       const toggleDropdown = (groupName) => {
         const index = openDropdowns.value.indexOf(groupName);
         if (index === -1) {
@@ -125,6 +124,9 @@
       });
   
       const hasPermission = (item) => {
+        if (item.to === 'home' && user) {
+          return true;
+        }
         // Verifica se o item tem permissão de acesso
         if (user?.email === import.meta.env.VITE_APP_USER_EMAIL_ADMIN && item.can === null) {
           return true; // Se a permissão for nula, todos têm acesso
@@ -134,8 +136,9 @@
         if (user?.email === import.meta.env.VITE_APP_USER_EMAIL_ADMIN) {
           return true;
         }
-  
-        return user?.permissions.includes(item.can);
+        
+        // return user?.permissions.includes(item.can);
+        return user?.permissions.some(permission => permission.name === item.can);
       };
   
       const shouldRenderGroup = (group) => {
@@ -144,7 +147,8 @@
           return user?.roles.some(role => role?.name === 'super-admin');
         } else {
           // Verifica se o usuário tem a permissão específica para acessar o grupo
-          return user?.permissions.includes(group.can);
+          // return user?.permissions.includes(group.can);
+          return user?.permissions.some(permission => permission.name === group.can);
         }
       };
   

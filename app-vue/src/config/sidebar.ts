@@ -6,19 +6,20 @@ export default {
                 {
                     title: 'Dashboard',
                     icon: 'fa-solid fa-dashboard',
-                    to: 'hello.world',
+                    to: 'home',
+                    can: null
                 },
                 {
                     title: 'Produtos',
                     icon: 'fa-solid fa-users',
                     to: 'products.index',
-                    // can: null
+                    can: 'list_products'
                 },    
                 {
                     title: 'Categorias',
                     icon: 'fa-solid fa-store',
                     to: 'categories.index',
-                    // can: null
+                    can: 'list_categories'
                 },    
             ]
         },
