@@ -70,7 +70,7 @@ import { useField, useForm } from 'vee-validate';
 import { object, string } from 'yup'
 import Spinner from '../../components/Spinner.vue';
 import {useAuthStore} from '../../../store/auth';
-import { LoginInvalidException } from "../../../config/lang";
+import { LoginInvalidException, InternalServerException } from "../../../config/lang";
 import { AxiosError } from "axios";
 
 export default {
@@ -107,7 +107,7 @@ export default {
                     if (error instanceof AxiosError || error.status === 500) {
                         notify({
                             title: "Falha ao entrar",
-                            text: "Ocorreu um erro no servidor. Tente novamente mais tarde.",
+                            text: InternalServerException,
                             type: "warn",
                         });
                         return;
