@@ -32,4 +32,15 @@ export default class AuthService extends BaseService {
                 })
         })
     }
+
+    static logout() {
+        return new Promise((resolve, reject) => {
+            this.request({ auth: true })
+                .post('logout')
+                .then(response => {
+                    resolve(response)
+                })
+                .catch(error => reject(error.response))
+        })
+    }
 }
