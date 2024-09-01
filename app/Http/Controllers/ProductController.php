@@ -13,7 +13,7 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        Gate::authorize('list_products', Product::class);
+        // Gate::authorize('list_products', Product::class);
         $products = Product::query()
             ->when($request->name, function ($query) use ($request) {
                 $query->where('name', 'LIKE', "%{$request->name}%");
@@ -30,7 +30,7 @@ class ProductController extends Controller
         // Gate::authorize('new_product', Product::class);
         $input = $request->validated();
         // Handle image upload
-        if ($input['image']) {
+        if ($request->image) {
             $image = $request->file('image');
             $originalFilename = $image->getClientOriginalName();
             $extension = $image->getClientOriginalExtension();
@@ -47,7 +47,7 @@ class ProductController extends Controller
     public function show($productId)
     {
         $product = $this->product($productId);
-        Gate::authorize('show_product', $product);
+        // Gate::authorize('show_product', $product);
         return ProductResource::make($product);
     }
 
@@ -63,7 +63,7 @@ class ProductController extends Controller
     public function destroy($productId)
     {
         $product = $this->product($productId);
-        Gate::authorize('destroy_product', $product);
+        // Gate::authorize('destroy_product', $product);
 
         $product->delete();
         return response()->noContent();
