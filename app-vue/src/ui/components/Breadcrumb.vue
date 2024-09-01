@@ -3,7 +3,7 @@
         <div class="flex justify-between dark:bg-gray-800 rounded-lg p-4 mb-2">
             <ol class="flex text-gray-600 list-reset">
                 <li>
-                    <router-link :to="{ name: 'hello.world' }" class="text-gray-600 dark:text-white">Home</router-link>
+                    <router-link :to="{ name: 'home' }" class="text-gray-600 dark:text-white">Home</router-link>
                 </li>
                 <li class="mx-2">/</li>
                 <li>

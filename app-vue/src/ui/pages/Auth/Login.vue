@@ -102,7 +102,7 @@ export default {
                             type    : "success",
                         });
                     }).finally(() => {
-                        router.push({ name: 'hello.world' })
+                        router.push({ name: 'home' })
                     });
             } catch (e) {
                 let msgError = "Falha na requisição";
