@@ -25,6 +25,16 @@ const router = createRouter({
                     component: () => import('../ui/pages/Products/Index.vue')
                 }
             ]
+        },
+        {
+            path: '/categories',
+            children: [
+                {
+                    name: 'categories.index',
+                    path: '',
+                    component: () => import('../ui/pages/Categories/Index.vue')
+                }
+            ]
         }
     ]
 });
