@@ -70,6 +70,8 @@ import { useField, useForm } from 'vee-validate';
 import { object, string } from 'yup'
 import Spinner from '../../components/Spinner.vue';
 import {useAuthStore} from '../../../store/auth';
+import { LoginInvalidException } from "../../../config/lang";
+import { AxiosError } from "axios";
 
 export default {
     components: {
@@ -93,25 +95,35 @@ export default {
         })
 
         const submit = handleSubmit(async (values) => {
-            try {
-                authStore
-                    .login(values.email, values.password)
-                    .then(() => {
-                        notify({
-                            title   : "Deu certo!",
-                            type    : "success",
-                        });
-                    }).finally(() => {
-                        router.push({ name: 'home' })
+            authStore
+                .login(values.email, values.password)
+                .then(() => {
+                    notify({
+                        title   : "Deu certo!",
+                        type    : "success",
                     });
-            } catch (e) {
-                let msgError = "Falha na requisição";
-                notify({
-                    title: "Falha ao autenticar",
-                    text: msgError,
-                    type: "warn",
+                })
+                .catch((error) => {
+                    if (error instanceof AxiosError || error.status === 500) {
+                        notify({
+                            title: "Falha ao entrar",
+                            text: "Ocorreu um erro no servidor. Tente novamente mais tarde.",
+                            type: "warn",
+                        });
+                        return;
+                    }
+
+                    let errorMessage;
+                    if (error.data.error === "LoginInvalidException") {
+                        notify({
+                            title   : LoginInvalidException,
+                            type    : "warn",
+                        });
+                    }
+                })
+                .finally(() => {
+                    router.push({ name: 'home' })
                 });
-            }
         })
 
         const { value: email }      = useField('email')
