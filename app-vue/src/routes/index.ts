@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { redirectIfAuthenticated, redirectIfNotAuthenticated } from './guards';
+import { checkPermission, redirectIfAuthenticated, redirectIfNotAuthenticated } from './guards';
 import { useMeStore } from '../store/me';
 
 const router = createRouter({
@@ -7,11 +7,27 @@ const router = createRouter({
     routes: [
         {
             path: '/:pathMatch(.*)*',
+            name:"error404",
             meta: {
                 title: 'Error 404',
                 public: true
             },
-            component: () => import('../ui/pages/errors/Error.vue')
+            component: () => import('../ui/pages/errors/Error.vue'),
+            props: {
+                title: 'Erro 404',
+                message: 'Página não encontrada.',
+                code: 404
+            }
+        },
+        {
+            path: '/403',
+            name:"error403",
+            component: () => import('../ui/pages/errors/Error.vue'),
+            props: {
+              title: 'Erro 403',
+              message: 'Acesso negado.',
+              code: 403
+            }
         },
         {
             path: '/login',
@@ -42,7 +58,7 @@ const router = createRouter({
             ]
         },
         {
-            path: '/products/',
+            path: '/produtos',
             beforeEnter: redirectIfNotAuthenticated,
             component: () => import('../ui/layouts/Default.vue'),
             children: [
@@ -59,8 +75,11 @@ const router = createRouter({
             ]
         },
         {
-            path: '/categories/',
+            path: '/categorias/',
             beforeEnter: redirectIfNotAuthenticated,
+            meta: {
+                can: 'list_categories'
+            },
             component: () => import('../ui/layouts/Default.vue'),
             children: [
                 {
@@ -104,6 +123,8 @@ router.beforeEach(async (_to, _from, next) => {
     if(token) {
         await meStore.getMe(); // Aguarde a conclusão da ação getMe
     }
+
+    checkPermission(_to, _from, next);
 
     next();
 })
