@@ -7,8 +7,8 @@ export const useProductStore = defineStore('product', {
         product: {}
     }),
     actions: {
-        async getProducts() {
-            return ProductsService.products().then((response: any) => {
+        async getProducts(params: {}) {
+            return ProductsService.products(params).then((response: any) => {
                 this.products = response.data.data
                 return this.products
             })
