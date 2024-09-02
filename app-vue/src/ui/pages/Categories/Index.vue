@@ -26,7 +26,7 @@
                                 {{ category?.name }}
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <button class="px-1 py-1 font-bold text-white bg-red-500 rounded hover hover:bg-red-700" @click.stop.prevent="destroyCategory(category.id)">Remover</button>
+                                <button class="px-1 py-1 font-bold text-white bg-red-500 rounded hover hover:bg-red-700" v-can="'destroy_category'" @click.stop.prevent="destroyCategory(category.id)">Remover</button>
                             </td>
                         </tr>
                     </tbody>

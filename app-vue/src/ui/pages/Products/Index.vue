@@ -1,9 +1,8 @@
 <template>
     <div class="container">
         <Breadcrumb title="Produtos">
-            <CreateProduct />
+            <CreateProduct v-can="'new_product'" />
         </Breadcrumb>
-
         
         <div
         class="w-full p-2 text-center bg-white rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 max-h-full">
@@ -54,8 +53,11 @@
                                 {{ product?.expiration_date }}
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <router-link class="px-1 py-1 font-bold text-white bg-blue-500 rounded hover hover:bg-blue-700 mr-2" :to="{ name: 'products.show', params: { id: product?.id } }">Visualizar</router-link>
-                                <button class="px-1 py-1 font-bold text-white bg-red-500 rounded hover hover:bg-red-700" @click.stop.prevent="destroyProduct(product?.id)">Remover</button>
+                                <div class="flex justify-between">
+                                    <router-link class="px-1 py-1 font-bold text-white bg-blue-500 rounded hover hover:bg-blue-700" v-can="'show_product'" :to="{ name: 'products.show', params: { id: product?.id } }">Visualizar</router-link>
+                                    <UpdateProduct v-can="'update_product'" :data="product" />
+                                    <button class="px-1 py-1 font-bold text-white bg-red-500 rounded hover hover:bg-red-700" v-can="'destroy_product'" @click.stop.prevent="destroyProduct(product?.id)">Remover</button>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -66,6 +68,7 @@
 </template>
 <script>
 import CreateProduct from './Create.vue'
+import UpdateProduct from './Edit.vue'
 import Breadcrumb from '../../components/Breadcrumb.vue';
 import Spinner from '../../components/Spinner.vue';
 import { computed, onMounted, ref } from 'vue';
@@ -77,7 +80,8 @@ export default {
     components: {
         Spinner,
         Breadcrumb,
-        CreateProduct
+        CreateProduct,
+        UpdateProduct
     },
     setup() {
         const route         = useRoute();
