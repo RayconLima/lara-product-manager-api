@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { checkPermission, redirectIfAuthenticated, redirectIfNotAuthenticated } from './guards';
+import { checkPermission, checkRole, redirectIfAuthenticated, redirectIfNotAuthenticated } from './guards';
 import { useMeStore } from '../store/me';
 
 const router = createRouter({
@@ -90,8 +90,11 @@ const router = createRouter({
             ]
         },
         {
-            path: '/roles/',
+            path: '/cargos/',
             beforeEnter: redirectIfNotAuthenticated,
+            meta: {
+                role: 'super-admin'
+            },
             component: () => import('../ui/layouts/Default.vue'),
             children: [
                 {
@@ -102,8 +105,11 @@ const router = createRouter({
             ]
         },
         {
-            path: '/permissions/',
+            path: '/permissoes/',
             beforeEnter: redirectIfNotAuthenticated,
+            meta: {
+                role: 'super-admin'
+            },
             component: () => import('../ui/layouts/Default.vue'),
             children: [
                 {
@@ -124,6 +130,7 @@ router.beforeEach(async (_to, _from, next) => {
         await meStore.getMe(); // Aguarde a conclusão da ação getMe
     }
 
+    checkRole(_to, _from, next);
     checkPermission(_to, _from, next);
 
     next();
