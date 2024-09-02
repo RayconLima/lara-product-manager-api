@@ -18,7 +18,7 @@ export default class ProductsService extends BaseService {
     static async storeProduct(params: any) {
         return new Promise(async (resolve, reject) => {
             await this.request({ auth: true })
-                .post('products', params)
+                .post('products', params, { headers: { 'Content-Type': 'multipart/form-data' }})
                 .then((response:any) => resolve(response))
                 .catch((error: any) => reject(error.response))
         })
