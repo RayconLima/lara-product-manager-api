@@ -51,17 +51,6 @@
         </div>
         <ul class="py-1 w-full">
             <li>
-                <router-link to="/profile"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                    role="menuitem">Meu perfil
-                </router-link>
-            </li>
-            <li>
-                <a href="#"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                    role="menuitem">Settings</a>
-            </li>
-            <li>
                 <a @click.prevent="logout"
                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                     role="menuitem">Sair</a>
