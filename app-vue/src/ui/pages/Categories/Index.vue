@@ -58,7 +58,9 @@ export default {
         });
 
         const destroyCategory = (id) => {
-            categoryStore.destroyCategory(id)
+            categoryStore.destroyCategory(id).finally(() => {
+                useProductStore().getCategories();
+            })
         }
 
         return {

@@ -94,7 +94,9 @@ export default {
         });
 
         const destroyProduct = (id) => {
-            productStore.destroyProduct(id)
+            productStore.destroyProduct(id).finally(() => {
+                useProductStore().getProducts();
+            })
         }
 
         const search = async () => {
