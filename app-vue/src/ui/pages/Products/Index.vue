@@ -4,10 +4,28 @@
             <CreateProduct />
         </Breadcrumb>
 
+        
         <div
-            class="w-full p-2 text-center bg-white rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 max-h-full">
-
-            <div class="bg-white rounded-lg shadow-md">
+        class="w-full p-2 text-center bg-white rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 max-h-full">
+        
+        <form class="flex items-center mb-2" @submit.prevent="search">
+            <div class="mr-2">
+                <select v-model="form.type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="" disabled>Selecione</option>
+                    <option value="name">Nome</option>
+                    <option value="description">Descrição</option>
+                </select>
+                <!-- <input type="text" v-model="filter" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3x/4 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" /> -->
+            </div>
+            <div>
+                <input type="text" placeholder="Informe sua pesquisa" v-model="form.search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3x/4 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+            </div>
+            <button type="submit"
+                  class="ml-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  Pesquisar
+            </button>
+        </form>
+        <div class="bg-white rounded-lg shadow-md">
                 <table class="min-w-full border border-gray-300">
                     <thead>
                         <tr>
@@ -47,8 +65,9 @@
 <script>
 import CreateProduct from './Create.vue'
 import Breadcrumb from '../../components/Breadcrumb.vue';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useProductStore } from "../../../store/products";
+import { useRoute } from 'vue-router';
 
 export default {
     name: 'Products',
@@ -57,8 +76,14 @@ export default {
         CreateProduct
     },
     setup() {
+        const route         = useRoute();
         const productStore  = useProductStore();
         const products      = computed(() => useProductStore().products);
+        const form          = ref({
+            type    : '',
+            search  : '',
+        });
+        const filteredProducts = computed(() => productStore.filteredProducts);
 
         onMounted(() => {
             useProductStore().getProducts();
@@ -68,9 +93,26 @@ export default {
             productStore.destroyProduct(id)
         }
 
+        const search = async () => {
+            if(form.value.type == 'name') {
+                await productStore.getProducts({
+                    name: form.value.search,
+                });
+            } 
+            
+            if (form.value.type == 'description'){
+                await productStore.getProducts({
+                    description: form.value.search,
+                });
+            }
+        }
+
         return {
+            form,
             products,
-            destroyProduct
+            filteredProducts,
+            search,
+            destroyProduct,
         }
     }
 }
