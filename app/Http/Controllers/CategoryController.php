@@ -12,14 +12,14 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        // Gate::authorize('list_categories', Category::class);
+        Gate::authorize('list_categories', Category::class);
         $categories = Category::paginate();
         return CategoryResource::collection($categories);
     }
 
     public function store(StoreCategoryRequest $request)
     {
-        // Gate::authorize('new_category', Category::class);
+        Gate::authorize('new_category', Category::class);
         $category = Category::create($request->validated());
         return CategoryResource::make($category);
     }
@@ -27,14 +27,14 @@ class CategoryController extends Controller
     public function show($categoryId)
     {
         $category = $this->category($categoryId);
-        // Gate::authorize('show_category', $category);
+        Gate::authorize('show_category', $category);
         return CategoryResource::make($category);
     }
 
     public function update($categoryId, UpdateCategoryRequest $request)
     {
         $category = $this->category($categoryId);
-        // Gate::authorize('update_category', $category);
+        Gate::authorize('update_category', $category);
         $category->update($request->validated());
         return CategoryResource::make($category);
     }
@@ -42,7 +42,7 @@ class CategoryController extends Controller
     public function destroy($categoryId)
     {
         $category = $this->category($categoryId);
-        // Gate::authorize('destroy_category', $category);
+        Gate::authorize('destroy_category', $category);
         $category->delete();
         return response()->noContent();
     }
