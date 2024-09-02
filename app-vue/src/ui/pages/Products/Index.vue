@@ -7,28 +7,29 @@
         
         <div
         class="w-full p-2 text-center bg-white rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 max-h-full">
-        
-        <form class="flex items-center mb-2" @submit.prevent="search">
-            <div class="mr-2">
-                <select v-model="form.type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option value="" disabled>Selecione</option>
-                    <option value="name">Nome</option>
-                    <option value="description">Descrição</option>
-                </select>
-                <!-- <input type="text" v-model="filter" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3x/4 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" /> -->
-            </div>
-            <div>
-                <input type="text" placeholder="Informe sua pesquisa" v-model="form.search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3x/4 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-            </div>
-            <button type="submit"
-                  class="ml-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                  Pesquisar
-            </button>
-        </form>
-        <div class="bg-white rounded-lg shadow-md">
+            <form class="flex items-center mb-2" @submit.prevent="search">
+                <div class="mr-2">
+                    <select v-model="form.type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="" disabled>Selecione</option>
+                        <option value="name">Nome</option>
+                        <option value="description">Descrição</option>
+                    </select>
+                </div>
+                <div>
+                    <input type="text" placeholder="Informe sua pesquisa" v-model="form.search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-3x/4 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+                <button type="submit"
+                    class="ml-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Pesquisar
+                </button>
+            </form>
+            <div class="bg-white rounded-lg shadow-md">
                 <table class="min-w-full border border-gray-300">
                     <thead>
                         <tr>
+                            <th class="px-4 py-2 text-white bg-gray-800 border-b">
+                                <Spinner v-if="productStore.loading" :loading="productStore.loading" />
+                            </th>
                             <th class="px-4 py-2 text-white bg-gray-800 border-b">Nome</th>
                             <th class="px-4 py-2 text-white bg-gray-800 border-b">Categoria</th>
                             <th class="px-4 py-2 text-white bg-gray-800 border-b">Preço</th>
@@ -39,6 +40,7 @@
                     <tbody>
                         <tr class="bg-white dark:bg-gray-800 dark:border-gray-700" v-for="product in products"
                             :key="product?.id">
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"></td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ product?.name }}
                             </td>
@@ -65,6 +67,7 @@
 <script>
 import CreateProduct from './Create.vue'
 import Breadcrumb from '../../components/Breadcrumb.vue';
+import Spinner from '../../components/Spinner.vue';
 import { computed, onMounted, ref } from 'vue';
 import { useProductStore } from "../../../store/products";
 import { useRoute } from 'vue-router';
@@ -72,6 +75,7 @@ import { useRoute } from 'vue-router';
 export default {
     name: 'Products',
     components: {
+        Spinner,
         Breadcrumb,
         CreateProduct
     },
@@ -110,6 +114,7 @@ export default {
         return {
             form,
             products,
+            productStore,
             filteredProducts,
             search,
             destroyProduct,
