@@ -47,10 +47,10 @@
                                 {{ product?.category?.name }}
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ product?.price }}
+                                {{ formatMoney(product?.price) }}
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ product?.expiration_date }}
+                                {{ customformatDate(product?.expiration_date) }}
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <div class="flex justify-between">
@@ -74,6 +74,7 @@ import Spinner from '../../components/Spinner.vue';
 import { computed, onMounted, ref } from 'vue';
 import { useProductStore } from "../../../store/products";
 import { useRoute } from 'vue-router';
+import { formatMoney, customformatDate } from '../../../config/utils/helpers';
 
 export default {
     name: 'Products',
@@ -119,11 +120,13 @@ export default {
 
         return {
             form,
-            products,
-            productStore,
-            filteredProducts,
             search,
+            products,
+            formatMoney,
+            productStore,
             destroyProduct,
+            filteredProducts,
+            customformatDate,
         }
     }
 }
