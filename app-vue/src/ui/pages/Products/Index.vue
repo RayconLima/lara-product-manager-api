@@ -37,7 +37,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white dark:bg-gray-800 dark:border-gray-700" v-for="product in products"
+                        <tr class="bg-white dark:bg-gray-800 dark:border-gray-700" v-for="product in products.data"
                             :key="product?.id">
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"></td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -62,6 +62,12 @@
                         </tr>
                     </tbody>
                 </table>
+                <Pagination
+                    routeName="products.index"
+                    :pagination="products"
+                    @changePage="changePage"
+                ></Pagination>
+                <!-- <Pagination :currentPage="products.meta.current_page" :totalPages="products.meta.total" /> -->
             </div>
         </div>
     </div>
@@ -71,6 +77,7 @@ import CreateProduct from './Create.vue'
 import UpdateProduct from './Edit.vue'
 import Breadcrumb from '../../components/Breadcrumb.vue';
 import Spinner from '../../components/Spinner.vue';
+import Pagination from '../../components/Pagination.vue';
 import { computed, onMounted, ref } from 'vue';
 import { useProductStore } from "../../../store/products";
 import { useRoute } from 'vue-router';
@@ -81,8 +88,9 @@ export default {
     components: {
         Spinner,
         Breadcrumb,
+        Pagination,
         CreateProduct,
-        UpdateProduct
+        UpdateProduct,
     },
     setup() {
         const route         = useRoute();
@@ -95,8 +103,12 @@ export default {
         const filteredProducts = computed(() => productStore.filteredProducts);
 
         onMounted(() => {
-            useProductStore().getProducts();
+            useProductStore().getProducts({ page: 1 });
         });
+
+        const changePage = (page) => {
+            productStore.getProducts({ page });
+        };
 
         const destroyProduct = (id) => {
             productStore.destroyProduct(id).finally(() => {
@@ -122,6 +134,7 @@ export default {
             form,
             search,
             products,
+            changePage,
             formatMoney,
             productStore,
             destroyProduct,

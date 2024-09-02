@@ -16,7 +16,7 @@ export const useProductStore = defineStore('product', {
         async getProducts(params?: {}) {
             this.isLoading = true
             return ProductsService.products(params).then((response: any) => {
-                this.products = response.data.data
+                this.products = response.data
                 return this.products
             }).finally(() => this.isLoading = false)
         },
@@ -36,6 +36,17 @@ export const useProductStore = defineStore('product', {
                 .getProduct(id)
                 .then((response: any) => {
                     return this.product = response.data.data;
+                })
+        },
+        async updateProduct(id: number, params: any) {
+            this.isLoading = true;
+            await ProductsService
+                .updateProduct(id, params)
+                .then((response: any) => {
+                    return this.products = response.data.data;
+                }).finally(() => {
+                    this.getProducts()
+                    this.isLoading = false
                 })
         },
         destroyProduct(id: number) {
