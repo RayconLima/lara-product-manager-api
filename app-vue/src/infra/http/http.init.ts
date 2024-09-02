@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+import axios, { AxiosInstance } from 'axios'
 import { URL_API, TOKEN_NAME } from '../../config'
 
 export default class Http {
@@ -16,19 +16,19 @@ export default class Http {
       })
     }
 
-    get(url: string, config?: AxiosRequestConfig) {
-      return this.instance.get(url, config);
+    get(url: string, params?: any) {
+      return this.instance.get(url, { params });
     }
   
-    post(url: string, data?: any, config?: AxiosRequestConfig) {
-      return this.instance.post(url, data, config);   
+    post(url: string, data?: any) {
+      return this.instance.post(url, data);
     }
   
-    put(url: string, data?: any, config?: AxiosRequestConfig) {
-      return this.instance.put(url, data, config);
+    put(url: string, data?: any) {
+      return this.instance.put(url, data);
     }
   
-    delete(url: string, config?: AxiosRequestConfig) {
-      return this.instance.delete(url, config);   
+    delete(url: string) {
+      return this.instance.delete(url);
     }
 }
