@@ -8,7 +8,7 @@ export const usePermissionStore = defineStore('permission', {
     actions: {
         async getPermissions() {
             return await PermissionsService.permissions().then((response: any) => {
-                this.permissions = response.data.data
+                this.permissions = response.data
             })
         },
     }
