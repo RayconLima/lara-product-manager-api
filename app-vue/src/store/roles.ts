@@ -8,7 +8,7 @@ export const useRoleStore = defineStore('role', {
     actions: {
         async getRoles() {
             return await RolesService.roles().then((response: any) => {
-                this.roles = response.data.data
+                this.roles = response.data
             })
         },
     }
