@@ -24,8 +24,8 @@ export default class Http {
       return this.instance.post(url, data, config);
     }
   
-    put(url: string, data?: any) {
-      return this.instance.put(url, data);
+    put(url: string, body: object, configs?: object): Promise<any> {
+      return this.instance.put(url, body, configs);
     }
   
     delete(url: string) {

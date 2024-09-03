@@ -13,7 +13,6 @@
 import { ref, computed, onMounted } from 'vue';
 import Modal from '../../components/Modal.vue';
 import { notify } from '@kyvg/vue3-notification';
-// import { useCategoryStore } from "../../../store/products";
 import { useCategoryStore } from "../../../store/categories";   
 export default {
     name: 'CreateCategory',
@@ -21,15 +20,11 @@ export default {
         Modal
     },
     setup() {
-        const modalCreateCategoryRef     = ref(null);
-        // const productStore              = useCategoryStore();
+        const modalCreateCategoryRef    = ref(null);
         const categoryStore             = useCategoryStore();
         const categories                = computed(() => useCategoryStore().categories);
         const form                      = ref({
             name            : '',
-            // category_id     : '',
-            // price           : '',
-            // expiration_date : '',
         });
 
         const newCategory = () => {
