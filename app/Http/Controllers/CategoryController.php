@@ -12,7 +12,6 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        Gate::authorize('list_categories', Category::class);
         $categories = Category::paginate();
         return CategoryResource::collection($categories);
     }

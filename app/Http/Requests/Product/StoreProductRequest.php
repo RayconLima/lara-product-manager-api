@@ -27,7 +27,7 @@ class StoreProductRequest extends FormRequest
             'name'              => ['required', 'string', 'max:50', Rule::unique('products')->ignore($this->id)],
             'price'             => ['required', 'numeric', 'min:0'],
             'description'       => ['nullable', 'string', 'max:200'],
-            'image'             => ['nullable', 'image', Rule::unique('products')->ignore($this->id)],
+            'image'             => ['nullable', 'file', 'mimes:jpeg,jpg,png'],
             'expiration_date'   => ['required', 'date', 'after:today'],
             'category_id'       => ['required', 'numeric'],
         ];

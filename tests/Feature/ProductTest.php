@@ -1,6 +1,5 @@
 <?php
 use App\Models\{User, Product, Category};
-use Laravel\Sanctum;
 beforeEach(function () {
     $this->user     = User::factory()->create();
     $this->token    = $this->user->createToken('auth_token')->plainTextToken;
@@ -23,12 +22,12 @@ describe('Product creation', function () {
     it('should try creating a product with a negative price', function () {
         $category = Category::factory()->create();
         $input = [
-            'name' => 'goiabada',
-            'price' => -2.50,
-            'expiration_date' => '2024-09-02',
-            'category_id' => $category->id,
-            'description' => null,
-            'image' => null,
+            'name'              => 'goiabada',
+            'price'             => -2.50,
+            'expiration_date'   => '2024-09-02',
+            'category_id'       => $category->id,
+            'description'       => null,
+            'image'             => null,
         ];
         
         $response = $this->postJson(route('products.store'), $input, [
@@ -47,12 +46,12 @@ describe('Product creation', function () {
     it('should try to create a product with an expiration date in the past', function () {
         $category = Category::factory()->create();
         $input = [
-            'name' => 'goiabada',
-            'price' => -2.50,
-            'expiration_date' => '2024-08-30',
-            'category_id' => $category->id,
-            'description' => null,
-            'image' => null,
+            'name'              => 'goiabada',
+            'price'             => -2.50,
+            'expiration_date'   => '2024-08-30',
+            'category_id'       => $category->id,
+            'description'       => null,
+            'image'             => null,
         ];
         
         $response = $this->postJson(route('products.store'), $input, [
@@ -69,12 +68,12 @@ describe('Product creation', function () {
     it('should create a product with all required fields filled in correctly', function () {
         $category = Category::factory()->create();
         $input = [
-            'name' => 'goiabada',
-            'price' => 2.50,
-            'expiration_date' => '2024-09-02',
-            'category_id' => $category->id,
-            'description' => null,
-            'image' => null,
+            'name'              => 'goiabada',
+            'price'             => 2.50,
+            'expiration_date'   => '2024-09-02',
+            'category_id'       => $category->id,
+            'description'       => null,
+            'image'             => null,
         ];
         $response = $this->postJson(route('products.store'), $input, [
             'Authorization' => "Bearer {$this->token}"
@@ -92,14 +91,13 @@ describe('Product creation', function () {
 describe('Product edition', function() {
     it('should try edit a product that does not exist', function () {
         $category = Category::factory()->create();
-        // $product = Product::factory()->create();
         $input = [
-            'name' => 'goiabada',
-            'price' => 2.50,
-            'expiration_date' => '2024-09-02',
-            'category_id' => $category->id,
-            'description' => null,
-            'image' => null,
+            'name'              => 'goiabada',
+            'price'             => 2.50,
+            'expiration_date'   => '2024-09-02',
+            'category_id'       => $category->id,
+            'description'       => null,
+            'image'             => null,
         ];
         $response = $this->putJson(route('products.update', 'product_id'), $input, [
             'Authorization' => "Bearer {$this->token}"
@@ -117,12 +115,12 @@ describe('Product edition', function() {
         $category = Category::factory()->create();
         $product = Product::factory()->create();
         $input = [
-            'name' => 'goiabada',
-            'price' => 2.50,
-            'expiration_date' => '2024-09-02',
-            'category_id' => $category->id,
-            'description' => null,
-            'image' => null,
+            'name'              => 'goiabada',
+            'price'             => 2.50,
+            'expiration_date'   => '2024-09-02',
+            'category_id'       => $category->id,
+            'description'       => null,
+            'image'             => null,
         ];
         $response = $this->putJson(route('products.update', $product->id), $input, [
             'Authorization' => "Bearer {$this->token}"

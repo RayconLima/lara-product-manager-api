@@ -50,12 +50,23 @@ class ProductController extends Controller
         return ProductResource::make($product);
     }
 
-    public function update($productId, UpdateProductRequest $request)
+    public function update(int $productId, UpdateProductRequest $request)
     {
         $product = $this->product($productId);
         Gate::authorize('update_product', $product);
         
-        $product->update($request->validated());
+        $input = $request->validated();
+        
+        if ($request->image) {
+            $image              = $request->file('image');
+            $originalFilename   = $image->getClientOriginalName();
+            $extension          = $image->getClientOriginalExtension();
+            $filename           = Str::slug($originalFilename, '-') . '-' . time() . '.' . $extension;
+            $imagePath          = $image->storeAs('public/products', $filename);
+            $input['image']     = $imagePath;
+        }
+
+        $product->update($input);
         return ProductResource::make($product);
     }
     

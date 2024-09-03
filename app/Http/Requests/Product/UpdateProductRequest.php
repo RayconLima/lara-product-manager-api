@@ -5,6 +5,7 @@ namespace App\Http\Requests\Product;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Validation\Rule;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -27,8 +28,8 @@ class UpdateProductRequest extends FormRequest
             'name'              => ['required', 'string', 'max:50'],
             'price'             => ['required', 'numeric'],
             'description'       => ['nullable', 'string', 'max:200'],
-            'image'             => ['nullable', 'string'],
-            'expiration_date'   => ['required', 'date', 'after:now()'],
+            'image'             => ['nullable', 'file', 'mimes:jpeg,jpg,png'],
+            'expiration_date'   => ['required', 'date', 'after:today'],
             'category_id'       => ['required', 'numeric'],
         ];
     }
