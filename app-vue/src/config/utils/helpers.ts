@@ -6,7 +6,7 @@ interface iPermission {
 export const userHasPermission = (permissionName: string): Boolean => {
   const useStore  = useMeStore();
   const user      = useStore.user;
-  // if (user.isAdmin) return true
+  if (user?.roles?.[0]) return true
   let hasPermission = false;
   user?.permissions.map((permission: iPermission) => {
     if (permission.name === permissionName) {

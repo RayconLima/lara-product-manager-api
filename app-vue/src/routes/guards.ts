@@ -1,3 +1,4 @@
+import { VITE_APP_USER_EMAIL_ADMIN } from '../config';
 import { useMeStore } from '../store/me';
 import router from './';
 
@@ -30,12 +31,13 @@ export const checkIfTokenExists = (to: any, _from: any, next: any) => {
 }
 
 export const checkPermission = async (to:any, _from: any, next:any) => {
-  const meStore = useMeStore();
-  const permission = to.meta.can;
+  const meStore           = useMeStore();
+  const permission        = to.meta.can;
+  const emailSuperAdmin   = VITE_APP_USER_EMAIL_ADMIN;
 
   if (permission) {
     const isAllowed = meStore.user?.permissions.some((data: any) => data.name === permission);
-    if (isAllowed) {
+    if (isAllowed || emailSuperAdmin === meStore.user?.email) {
       next();
     } else {
       router.push({
