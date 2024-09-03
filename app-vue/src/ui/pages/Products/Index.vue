@@ -67,7 +67,6 @@
                     :pagination="products"
                     @changePage="changePage"
                 ></Pagination>
-                <!-- <Pagination :currentPage="products.meta.current_page" :totalPages="products.meta.total" /> -->
             </div>
         </div>
     </div>
