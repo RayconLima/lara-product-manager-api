@@ -21,6 +21,12 @@ export default {
                     to: 'categories.index',
                     can: 'list_categories'
                 },    
+                {
+                    title: 'Usuarios',
+                    icon: 'fa-solid fa-users',
+                    to: 'users.index',
+                    can: null
+                },    
             ]
         },
         accessControl: {
