@@ -75,6 +75,18 @@ const router = createRouter({
             ]
         },
         {
+            path: '/usuarios',
+            beforeEnter: redirectIfNotAuthenticated,
+            component: () => import('../ui/layouts/Default.vue'),
+            children: [
+                {
+                    path: '',
+                    name: 'users.index',
+                    component: () => import('../ui/pages/Users/Index.vue')
+                },
+            ]
+        },
+        {
             path: '/categorias/',
             beforeEnter: redirectIfNotAuthenticated,
             meta: {
@@ -124,10 +136,10 @@ const router = createRouter({
 
 router.beforeEach(async (_to, _from, next) => {
     const meStore   = useMeStore();
-
-    const token = localStorage.getItem(import.meta.env.VITE_APP_TOKEN_NAME);
+    const token     = localStorage.getItem(import.meta.env.VITE_APP_TOKEN_NAME);
+    
     if(token) {
-        await meStore.getMe(); // Aguarde a conclusão da ação getMe
+        await meStore.getMe();
     }
 
     checkRole(_to, _from, next);
