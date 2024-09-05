@@ -17,10 +17,10 @@
                     </thead>
                     <tbody>
                         <tr class="bg-white dark:bg-gray-800 dark:border-gray-700" v-for="role in roles.data"
-                            :key="product?.id">
+                            :key="role?.id">
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"></td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ role?.name }}
+                                {{ role?.label }}
                             </td>
                         </tr>
                     </tbody>
@@ -36,7 +36,7 @@
 </template>
 <script>
 import { onMounted, computed } from 'vue';
-import { useRoleStore } from '../../../../store/roles';
+import { useRolesStore } from '../../../../store/roles';
 import Breadcrumb from '../../../components/Breadcrumb.vue';
 export default {
     name: 'Roles',
@@ -44,10 +44,10 @@ export default {
         Breadcrumb
     },
     setup() {
-        const roleStore  = useRoleStore();
+        const roleStore  = useRolesStore();
         const roles      = computed(() => roleStore.roles);
         onMounted(() => {
-            useRoleStore().getRoles();
+            useRolesStore().getRoles();
         });
 
         return {
