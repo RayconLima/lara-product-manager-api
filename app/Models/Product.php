@@ -32,13 +32,9 @@ class Product extends Model
     protected static function booted()
     {
         static::deleting(function ($model) {
-            if($model->images()->count() == 1) {
-                foreach($model->images as $image)
-                {
-                    $image->delete();
-                }
-            } else {
-                throw new NotDeleteException("Product cannot be deleted because it has images");
+            foreach($model->images as $image)
+            {
+                $image->delete();
             }
         });
     }
