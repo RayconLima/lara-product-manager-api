@@ -32,7 +32,6 @@ import Breadcrumb from '../../components/Breadcrumb.vue';
 import { useProductStore } from "../../../store/products";
 import { useProductImageStore } from "../../../store/product-images";
 import { formatMoney } from '../../../config/utils/helpers';
-import { HOST } from '../../../config';
 export default {
     name: 'Single',
     components: {
@@ -45,7 +44,6 @@ export default {
         const product               = computed(()   => useProductStore().product);
         const images                = computed(()   => productImageStore.images);
         const route                 = useRoute();
-        const host                  = HOST;
 
         onMounted(() => {
             useProductStore().getProduct(route.params.id);
@@ -57,7 +55,6 @@ export default {
         }
 
         return {
-            host,
             images,
             product,
             formatMoney,
