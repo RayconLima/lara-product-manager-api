@@ -13,6 +13,14 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="container flex bg-white rounded-md shadow-md mt-4">
+            <div class="p-4 grid grid-cols-2 md:grid-cols-3 gap-4" >
+                <div v-for="image in images.data" :key="image.id">
+                    <img class="h-5/4 max-w-full rounded-lg" :src="`${image.path}`" :alt="`${image.path}`">
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 </template>
@@ -22,7 +30,9 @@ import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import Breadcrumb from '../../components/Breadcrumb.vue';
 import { useProductStore } from "../../../store/products";
+import { useProductImageStore } from "../../../store/product-images";
 import { formatMoney } from '../../../config/utils/helpers';
+import { HOST } from '../../../config';
 export default {
     name: 'Single',
     components: {
@@ -30,12 +40,16 @@ export default {
         CreateProduct
     },
     setup() {
-        const productStore  = useProductStore();
-        const product       = computed(() => useProductStore().product);
-        const route         = useRoute();
+        const productStore          = useProductStore();
+        const productImageStore     = useProductImageStore();
+        const product               = computed(()   => useProductStore().product);
+        const images                = computed(()   => productImageStore.images);
+        const route                 = useRoute();
+        const host                  = HOST;
 
         onMounted(() => {
             useProductStore().getProduct(route.params.id);
+            useProductImageStore().getImages();
         });
 
         const destroyProduct = (id) => {
@@ -43,6 +57,8 @@ export default {
         }
 
         return {
+            host,
+            images,
             product,
             formatMoney,
             destroyProduct
