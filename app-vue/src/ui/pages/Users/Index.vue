@@ -30,6 +30,7 @@
                                 {{ user?.email }}
                             </td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <UpdateUser :data="user" />
                                 <button class="px-1 py-1 font-bold text-white bg-red-500 rounded hover hover:bg-red-700" v-can="'destroy_user'" @click.stop.prevent="destroyUser(user.id)">Remover</button>
                             </td>
                         </tr>
@@ -41,24 +42,26 @@
 </template>
 <script>
 import CreateUser from './Create.vue'
-import Breadcrumb from '../../components/Breadcrumb.vue';
-import Spinner from '../../components/Spinner.vue';
+import UpdateUser from './Edit.vue'
 import { computed, onMounted } from 'vue';
-import { useUserStore } from "../../../store/users";
+import Spinner from '../../components/Spinner.vue';
+import { useUsersStore } from "../../../store/users";
+import Breadcrumb from '../../components/Breadcrumb.vue';
 
 export default {
     name: 'Users',
     components: {
         Spinner,
         Breadcrumb,
-        CreateUser
+        CreateUser,
+        UpdateUser
     },
     setup() {
-        const userStore = useUserStore();
-        const users     = computed(() => useUserStore().users);
+        const userStore = useUsersStore();
+        const users     = computed(() => useUsersStore().users);
 
         onMounted(() => {
-            useUserStore().getUsers();
+            useUsersStore().getUsers();
         });
 
         // const destroyUser = (id) => {
