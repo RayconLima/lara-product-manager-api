@@ -31,6 +31,7 @@ class Product extends Model
 
     protected static function booted()
     {
+        parent::boot();
         static::deleting(function ($model) {
             foreach($model->images as $image)
             {

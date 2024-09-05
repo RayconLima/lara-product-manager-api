@@ -19,6 +19,7 @@ class Category extends Model
 
     protected static function booted()
     {
+        parent::boot();
         static::deleting(function ($model) {
             foreach($model->products as $product)
             {
