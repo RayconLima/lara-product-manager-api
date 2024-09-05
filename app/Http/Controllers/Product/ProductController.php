@@ -29,18 +29,7 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         Gate::authorize('new_product', Product::class);
-        $input = $request->validated();
-        dd($input);
-        
-        if ($request->image) {
-            $image              = $request->file('image');
-            $originalFilename   = $image->getClientOriginalName();
-            $extension          = $image->getClientOriginalExtension();
-            $filename           = Str::slug($originalFilename, '-') . '-' . time() . '.' . $extension;
-            $imagePath          = $image->storeAs('public/products', $filename);
-            $input['image']     = $imagePath;
-        }
-
+        $input = $request->validated();        
         $product = Product::create($input);
         return ProductResource::make($product);
     }
