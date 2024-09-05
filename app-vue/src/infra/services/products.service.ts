@@ -34,10 +34,9 @@ export default class ProductsService extends BaseService {
     }
 
     static async updateProduct(id: number, params: any) {
-        console.log(params)
         return new Promise(async (resolve, reject) => {
             await this.request({ auth: true })
-                .put(`products/${id}`, params, { headers: { 'Content-Type': 'multipart/form-data' }})
+                .put(`products/${id}`, params, { headers: { 'Content-Type': 'application/json' }})
                 .then((response:any) => resolve(response))
                 .catch((error : any) => reject(error.response))
         })
