@@ -19,7 +19,6 @@ class ProductResource extends JsonResource
             'name'              => $this->name,
             'price'             => $this->price,
             'description'       => $this->description,
-            'image'             => $this->image,
             'expiration_date'   => $this->expiration_date,
             'category'          => CategoryResource::make($this->category),
         ];
