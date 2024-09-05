@@ -19,18 +19,11 @@ class Category extends Model
 
     protected static function booted()
     {
-        static::deleting(function ($category) {
-            if($category->products->count() > 0) {
-                // throw new \Exception('Category cannot be deleted because it has products');
-                throw new NotDeleteException();
+        static::deleting(function ($model) {
+            foreach($model->products as $product)
+            {
+                $product->delete();
             }
         });
-            // $lastProduct = static::query()->orderBy('id', 'desc')->first();
-            // if ($lastProduct) {
-            //     $product->sku = 'PROD-' . str_pad($lastProduct->getKey() + 1, 4, '0', STR_PAD_LEFT);
-            // } else {
-            //     $product->sku = 'PROD-0001';
-            // }
-        // });
     }
 }
