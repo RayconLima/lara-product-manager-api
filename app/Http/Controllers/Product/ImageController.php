@@ -12,9 +12,12 @@ use App\Http\Requests\Product\StoreUpdateImageRequest;
 
 class ImageController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $images = Image::paginate();
+        $images = Image::query()->when($request->product_id, function ($query) use ($request) {
+            $query->where('product_id', 'LIKE', "%{$request->product_id}%");
+        })
+        ->paginate();
         return ProductImageResource::collection($images);
     }
 
@@ -27,7 +30,6 @@ class ImageController extends Controller
             $extension          = $image->getClientOriginalExtension();
             $filename           = Str::slug($originalFilename, '-') . '-' . time() . '.' . $extension;
             $imagePath          = $image->storeAs('products', $filename);
-            // $imagePath          = $image->store('products', 'public');
             $input['path']      = $imagePath;
         }
         $image = Image::query()->create([
@@ -41,7 +43,7 @@ class ImageController extends Controller
     public function destroy(Image $image)
     {
         if (Storage::url($image->path)) {
-            Storage::disk('local')->delete($image->path);
+            Storage::disk('public')->delete($image->path);
         }
 
         $image->delete();
