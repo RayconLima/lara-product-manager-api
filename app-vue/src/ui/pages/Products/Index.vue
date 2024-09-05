@@ -110,9 +110,17 @@ export default {
         };
 
         const destroyProduct = (id) => {
-            productStore.destroyProduct(id).finally(() => {
-                useProductStore().getProducts();
-            })
+            productStore.destroyProduct(id)
+                .catch((e) => {
+                    notify({
+                        title: "Deu ruim",
+                        text: e?.data?.message,
+                        type: "warning",
+                    });
+                })
+                .finally(() => {
+                    useProductStore().getProducts();
+                })
         }
 
         const search = async () => {
