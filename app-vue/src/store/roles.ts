@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import RolesService from "../infra/services/acl/roles.service"
 
-export const useRoleStore = defineStore('role', {
+export const useRolesStore = defineStore('role', {
     state: () => ({
         roles: [],
     }),
