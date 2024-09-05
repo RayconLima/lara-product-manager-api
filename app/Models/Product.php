@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany};
+use App\Exceptions\NotDeleteException;
 
 class Product extends Model
 {
@@ -26,5 +27,19 @@ class Product extends Model
     public function images(): HasMany
     {
         return $this->hasMany(Image::class);
+    }
+
+    protected static function booted()
+    {
+        static::deleting(function ($model) {
+            if($model->images()->count() == 1) {
+                foreach($model->images as $image)
+                {
+                    $image->delete();
+                }
+            } else {
+                throw new NotDeleteException("Product cannot be deleted because it has images");
+            }
+        });
     }
 }
