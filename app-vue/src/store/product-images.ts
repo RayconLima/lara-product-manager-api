@@ -20,5 +20,10 @@ export const useProductImageStore = defineStore('productImage', {
                 return this.images
             }).finally(() => this.isLoading = false)
         },
+        destroyImage(id: number) {
+            ProductImagesService.destroy(id).then(() => {
+                this.getImages();
+            })
+        }
     }
 })
