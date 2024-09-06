@@ -20,6 +20,7 @@
                         <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
                             {{ title }}
                         </span>
+                        
                     </router-link>
                 </div>
                 <div class="flex items-center">
@@ -29,7 +30,7 @@
                                 class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
                                 <span class="sr-only">Open user menu</span>
                                 <img class="w-8 h-8 rounded-full"
-                                    :src="user?.image_url ?? 'https://flowbite.com/docs/images/people/profile-picture-5.jpg'"
+                                    :src="user?.avatar ?? 'https://flowbite.com/docs/images/people/profile-picture-5.jpg'"
                                     alt="user photo">
                             </button>
                         </div>
