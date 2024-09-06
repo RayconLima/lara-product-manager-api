@@ -31,13 +31,13 @@ class UserController extends Controller
     {
         $input  = $request->validated();
 
-        if ($request->image) {
-            $image              = $request->file('avatar');
+        if ($request->avatar) {
+            $image              = $input['avatar'];
             $originalFilename   = $image->getClientOriginalName();
             $extension          = $image->getClientOriginalExtension();
             $filename           = Str::slug($originalFilename, '-') . '-' . time() . '.' . $extension;
-            $imagePath          = $image->storeAs('public/users', $filename);
-            $input['avatar']     = $imagePath;
+            $imagePath          = $image->storeAs('users', $filename);
+            $input['avatar']      = $imagePath;
         }
 
         $user   = User::create($input);
