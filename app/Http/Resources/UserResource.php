@@ -22,6 +22,7 @@ class UserResource extends JsonResource
             'avatar'        => Storage::url($this->avatar),
             'roles'         => RoleResource::collection($this->roles),
             'permissions'   => PermissionResource::collection($this->getRolePermissions()),
+            'token'         => $this->whenNotNull($this->token),
         ];
     }
 }
