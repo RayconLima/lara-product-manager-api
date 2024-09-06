@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use Event;
+use App\Events\UserRegistered;
 use Illuminate\Support\ServiceProvider;
+use App\Listeners\UserRegisteredNotification;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Event::listen(
+            UserRegistered::class,
+            UserRegisteredNotification::class,
+        );
     }
 }
