@@ -36,7 +36,7 @@
 import { ref, computed, onMounted } from 'vue';
 import Modal from '../../components/Modal.vue';
 import { notify } from '@kyvg/vue3-notification';
-import { useUserStore } from "../../../store/users";   
+import { useUsersStore } from "../../../store/users";   
 export default {
     name: 'CreateUser',
     components: {
@@ -44,7 +44,7 @@ export default {
     },
     setup() {
         const modalCreateUserRef    = ref(null);
-        const userStore             = useUserStore();
+        const userStore             = useUsersStore();
         const users                 = computed(() => useUserStore().users);
         const form                  = ref({
             name        : '',
