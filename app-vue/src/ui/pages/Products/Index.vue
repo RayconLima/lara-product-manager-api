@@ -94,7 +94,7 @@ export default {
     setup() {
         const route         = useRoute();
         const productStore  = useProductStore();
-        const products      = computed(() => useProductStore().products);
+        const products      = computed(() => productStore.products);
         const form          = ref({
             type    : '',
             search  : '',
@@ -102,7 +102,7 @@ export default {
         const filteredProducts = computed(() => productStore.filteredProducts);
 
         onMounted(() => {
-            useProductStore().getProducts({ page: 1 });
+            productStore.getProducts({ page: 1 });
         });
 
         const changePage = (page) => {
