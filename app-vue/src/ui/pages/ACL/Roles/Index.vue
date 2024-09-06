@@ -40,10 +40,12 @@
 import { onMounted, computed } from 'vue';
 import { useRolesStore } from '../../../../store/roles';
 import Breadcrumb from '../../../components/Breadcrumb.vue';
+import Spinner from '../../../components/Spinner.vue';
 export default {
     name: 'Roles',
     components: {
-        Breadcrumb
+        Spinner,
+        Breadcrumb,
     },
     setup() {
         const roleStore  = useRolesStore();
