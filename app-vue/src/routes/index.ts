@@ -84,6 +84,11 @@ const router = createRouter({
                     name: 'users.index',
                     component: () => import('../ui/pages/Users/Index.vue')
                 },
+                {
+                    path: ':id',
+                    name: 'users.show',
+                    component: () => import('../ui/pages/Users/Single.vue')
+                },
             ]
         },
         {
