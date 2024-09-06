@@ -13,6 +13,14 @@ export default class RolesService extends BaseService {
                 })
         })
     }
+    static async getUser(id: number) {
+        return new Promise(async (resolve, reject) => {
+            await this.request({ auth: true })
+                .get(`users/${id}`)
+                .then((response:any) => resolve(response))
+                .catch((error: any) => reject(error.response))
+        })
+    }
     static async storeUser(params: any) {
         return new Promise(async (resolve, reject) => {
             await this.request({ auth: true })
