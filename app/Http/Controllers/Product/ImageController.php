@@ -47,7 +47,6 @@ class ImageController extends Controller
         }
 
         $image->delete();
-
-        return response()->json(['message' => 'Image deleted successfully'], 200);
+        return response()->noContent();
     }
 }
