@@ -12,7 +12,7 @@
                                 <Spinner v-if="permissionStore.loading" :loading="permissionStore.loading" />
                             </th>
                             <th class="px-4 py-2 text-white bg-gray-800 border-b">Nome</th>
-                            <th class="px-4 py-2 text-white bg-gray-800 border-b"></th>
+                            <th class="px-4 py-2 text-white bg-gray-800 border-b">Label</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -21,6 +21,9 @@
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"></td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ permission?.name }}
+                            </td>
+                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{ permission?.label }}
                             </td>
                         </tr>
                     </tbody>
@@ -38,16 +41,18 @@
 import { onMounted, computed } from 'vue';
 import { usePermissionStore } from '../../../../store/permissions';
 import Breadcrumb from '../../../components/Breadcrumb.vue';
+import Spinner from '../../../components/Spinner.vue';
 export default {
     name: 'Permissions',
     components: {
+        Spinner,
         Breadcrumb
     },
     setup() {
         const permissionStore  = usePermissionStore();
         const permissions      = computed(() => permissionStore.permissions);
         onMounted(() => {
-            usePermissionStore().getPermissions();
+            permissionStore.getPermissions();
         });
 
         return {
