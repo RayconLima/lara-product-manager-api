@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\ForgotPasswordRequested;
+use App\Listeners\SendForgotPasswordNotification;
 use Event;
 use App\Events\UserRegistered;
 use Illuminate\Support\ServiceProvider;
@@ -25,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(
             UserRegistered::class,
             UserRegisteredNotification::class,
+        );
+        Event::listen(
+            ForgotPasswordRequested::class,
+            SendForgotPasswordNotification::class,
         );
     }
 }
