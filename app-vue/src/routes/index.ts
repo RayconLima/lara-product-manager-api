@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { checkPermission, checkRole, redirectIfAuthenticated, redirectIfNotAuthenticated } from './guards';
+import { checkIfTokenExists, checkPermission, checkRole, redirectIfAuthenticated, redirectIfNotAuthenticated } from './guards';
 import { useMeStore } from '../store/me';
 
 const router = createRouter({
@@ -45,6 +45,34 @@ const router = createRouter({
                 }
             ],
         },
+        {
+            path: '/cadastrar',
+            component: () => import('../ui/layouts/Auth.vue'),
+            beforeEnter: redirectIfAuthenticated,
+            name: 'register',
+            meta: {
+              title: 'Cadastrar',
+              public: true
+            },
+            children: [
+              {
+                path: '',
+                component: () => import('../ui/pages/Auth/Register.vue')
+              },
+            ]
+        },
+        {
+            path: '/verificar-email',
+            component: () => import('../ui/layouts/Auth.vue'),
+            beforeEnter: checkIfTokenExists,
+            children: [
+              {
+                path: '',
+                name: 'verifyEmail',
+                component: () => import('../ui/pages/Auth/VerifyEmail.vue')
+              }
+            ],
+          },
         {
             path: '/',
             beforeEnter: redirectIfNotAuthenticated,

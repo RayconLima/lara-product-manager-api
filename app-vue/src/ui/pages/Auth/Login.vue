@@ -55,11 +55,11 @@
 
                 <span v-else>Entrar</span>
             </button>
-            <!-- <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+            <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                 Não tem conta?
                 <router-link class="font-medium text-primary-600 hover:underline dark:text-primary-500"
                     :to="{ name: 'register' }">Cadastre-se</router-link>
-            </p> -->
+            </p>
         </form>
     </div>
 </template>
