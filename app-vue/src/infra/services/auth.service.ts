@@ -4,7 +4,8 @@ import BaseService from "./base.service";
 interface UserFormInterface {
     name: String,
     email: String,
-    password: String
+    password: String,
+    token: String
   }
 
 export default class AuthService extends BaseService {
@@ -45,7 +46,29 @@ export default class AuthService extends BaseService {
         })
     }
 
-    static async checkToken(token: string) {
+    static async forgotPassword(params: UserFormInterface) {
+        return new Promise((resolve, reject) => {
+            this.request()
+                .post('forgot-password', { email: params })
+                .then(response => {
+                    resolve(response)
+                })
+                .catch(error => reject(error.response))
+        })
+    }
+
+    static async resetPassword(params: UserFormInterface) {
+        return new Promise((resolve, reject) => {
+            this.request()
+                .post('reset-password', params)
+                .then(response => {
+                    resolve(response)
+                })
+                .catch(error => reject(error.response))
+        })
+    }
+
+    static async checkToken(token: UserFormInterface) {
         return new Promise((resolve, reject) => {
             this.request({ auth: true })
                 .post('verify-email', { token })
@@ -58,7 +81,7 @@ export default class AuthService extends BaseService {
         })
     }
 
-    static async verifyEmailfromToken(token: string) {
+    static async verifyEmailfromToken(token: UserFormInterface) {
         return new Promise((resolve, reject) => {
             this.request({ auth: true })
                 .post('verify-email', { token: token })
