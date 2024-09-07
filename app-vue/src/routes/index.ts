@@ -62,6 +62,22 @@ const router = createRouter({
             ]
         },
         {
+            path: '/esqueci-minha-senha',
+            component: () => import('../ui/layouts/Auth.vue'),
+            beforeEnter: redirectIfAuthenticated,
+            meta: {
+              title: 'Esqueci minha senha',
+              public: true
+            },
+            children: [
+              {
+                path: '',
+                name: 'forgotPassword',
+                component: () => import('../ui/pages/Auth/ForgotPassword.vue')
+              }
+            ],
+          },
+        {
             path: '/verificar-email',
             component: () => import('../ui/layouts/Auth.vue'),
             beforeEnter: checkIfTokenExists,
