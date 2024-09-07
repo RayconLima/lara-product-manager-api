@@ -1,6 +1,12 @@
 import { defineStore } from 'pinia';
 import AuthService from '../infra/services/auth.service'
 import { useMeStore } from './me';
+import axios from 'axios';
+
+interface LoginFormInterface {
+  email: string,
+  password: string
+}
 
 interface UserFormInterface {
   name: String,
@@ -14,8 +20,8 @@ export const useAuthStore = defineStore('auth', {
   }),
 
   actions: {
-    async login(params: UserFormInterface) {
-      return await AuthService.auth(params).then((response: any) => {
+    async login({ email, password }: LoginFormInterface) {
+      return await AuthService.auth({ email, password }).then((response: any) => {
         localStorage.setItem(import.meta.env.VITE_APP_TOKEN_NAME, response.data.token)
         const meStore = useMeStore();
         meStore.user  = response.data.data
@@ -44,11 +50,11 @@ export const useAuthStore = defineStore('auth', {
    async verifyEmail(token: string) {
       return await AuthService.checkToken(token).then((response) => response)
     },
-    // forgotPassword(email) {
-    //   return axios.post('forgot-password', { email })
-    // },
-    // resetPassword(token, password) {
-    //   return axios.post('reset-password', { token, password })
-    // }
+    forgotPassword(email: string) {
+      return axios.post('forgot-password', { email })
+    },
+    resetPassword(token: string, password: string) {
+      return axios.post('reset-password', { token, password })
+    }
   }
 });
