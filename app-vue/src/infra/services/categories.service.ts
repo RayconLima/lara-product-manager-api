@@ -15,7 +15,7 @@ export default class CategoriesService extends BaseService {
         })
     }
 
-    static async storeCategory(params: any) {
+    static async storeCategory(params: String) {
         return new Promise(async (resolve, reject) => {
             await this.request({ auth: true })
                 .post('categories', params)
@@ -33,10 +33,10 @@ export default class CategoriesService extends BaseService {
         })
     }
 
-    static async updateCategory(id: number, payload: any) {
+    static async updateCategory(id: number, params: String) {
         return new Promise(async (resolve, reject) => {
             await this.request({ auth: true })
-                .put(`categories/${id}`, {...payload, name: payload.label.toLowerCase().trim()})
+                .put(`categories/${id}`, params)
                 .then((response:any) => resolve(response))
                 .catch((error : any) => reject(error.response))
         })
