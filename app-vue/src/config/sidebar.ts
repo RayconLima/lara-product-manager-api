@@ -25,7 +25,7 @@ export default {
                     title: 'Usuarios',
                     icon: 'fa-solid fa-users',
                     to: 'users.index',
-                    can: null
+                    can: 'list_users'
                 },    
             ]
         },
