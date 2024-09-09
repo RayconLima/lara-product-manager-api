@@ -25,8 +25,11 @@
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ category?.name }}
                             </td>
-                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <button class="px-1 py-1 font-bold text-white bg-red-500 rounded hover hover:bg-red-700" v-can="'destroy_category'" @click.stop.prevent="destroyCategory(category.id)">Remover</button>
+                            <td scope="row" class="px-6 float-end py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <div class="flex">
+                                    <UpdateCategory v-can="'update_category'" :data="category" />
+                                    <button class="ml-4 px-1 py-1 font-bold text-white bg-red-500 rounded hover hover:bg-red-700" v-can="'destroy_category'" @click.stop.prevent="destroyCategory(category.id)">Remover</button>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -37,6 +40,7 @@
 </template>
 <script>
 import CreateCategory from './Create.vue'
+import UpdateCategory from './Edit.vue'
 import Breadcrumb from '../../components/Breadcrumb.vue';
 import Spinner from '../../components/Spinner.vue';
 import { computed, onMounted } from 'vue';
@@ -47,7 +51,8 @@ export default {
     components: {
         Spinner,
         Breadcrumb,
-        CreateCategory
+        CreateCategory,
+        UpdateCategory
     },
     setup() {
         const categoryStore = useCategoryStore();
