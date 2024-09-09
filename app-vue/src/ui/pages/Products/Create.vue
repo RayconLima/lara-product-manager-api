@@ -104,7 +104,6 @@ export default {
         return {
             categories,
             form,
-            config,
             imagePreview,
             newProduct,
             handleImageChange,
