@@ -1,6 +1,14 @@
 import { defineStore } from "pinia";
 import ProductsService from "../infra/services/products.service";
 
+interface ProductInterface {
+    name: String,
+    price: Number,
+    description: String,
+    expiration_date: Date,
+    category_id: Number
+}
+
 export const useProductStore = defineStore('product', {
     state: () => ({
         products: [],
@@ -20,7 +28,7 @@ export const useProductStore = defineStore('product', {
                 return this.products
             }).finally(() => this.isLoading = false)
         },
-        async saveProduct(params: any) {
+        async saveProduct(params: ProductInterface) {
             this.isLoading = true
             await ProductsService
                 .storeProduct(params)
@@ -38,7 +46,7 @@ export const useProductStore = defineStore('product', {
                     return this.product = response.data.data;
                 })
         },
-        async updateProduct(id: number, params: any) {
+        async updateProduct(id: number, params: ProductInterface) {
             this.isLoading = true;
             await ProductsService
                 .updateProduct(id, params)
