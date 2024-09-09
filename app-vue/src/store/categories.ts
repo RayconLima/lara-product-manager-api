@@ -15,13 +15,20 @@ export const useCategoryStore = defineStore('category', {
         async getCategories() {
             this.isLoading = true
             return CategoriesService.categories().then((response: any) => {
-                this.categories = response.data.data
+                this.categories = response.data
                 return this.categories
             }).finally(() => this.isLoading = false)
         },
-        async saveCategory(params: any) {
+        async saveCategory(params: String) {
             await CategoriesService
                 .storeCategory(params)
+                .then((response: any) => {
+                    return this.categories = response.data.data;
+                })
+        },
+        async updateCategory(id: number, params: String) {
+            await CategoriesService
+                .updateCategory(id, params)
                 .then((response: any) => {
                     return this.categories = response.data.data;
                 })
