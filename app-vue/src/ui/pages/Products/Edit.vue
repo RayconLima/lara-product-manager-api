@@ -67,7 +67,7 @@ export default {
         });
         
         const updateProduct = async () => {
-            await productStore.updateProduct(props.data.id, form.value)
+            await productStore.updateProduct(props.data.id, {...form.value, price: form.value.price.replace(",", ".")})
                 .then(() => {
                     notify({
                         title: "Deu certo",
