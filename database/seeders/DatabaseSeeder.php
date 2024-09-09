@@ -18,12 +18,16 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            CategorySeeder::class,
             ProductSeeder::class,
             UserSeeder::class,
             PermissionSeeder::class,
             RoleSeeder::class,
         ]);
+        
+        $user = User::where('name', 'super admin')->first();
+        $role = Role::where('name', 'super-admin')->first();
+        $user->roles()->attach($role);
+
         $this->setAdmin();
         $this->setSeller();
     }

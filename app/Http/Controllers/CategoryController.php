@@ -12,14 +12,13 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        Gate::authorize('list_categories', Product::class);
         $categories = Category::paginate();
         return CategoryResource::collection($categories);
     }
 
     public function store(StoreCategoryRequest $request)
     {
-        Gate::authorize('new_category', Product::class);
+        Gate::authorize('new_category', Category::class);
         $category = Category::create($request->validated());
         return CategoryResource::make($category);
     }

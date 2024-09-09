@@ -75,4 +75,11 @@ php artisan migrate
 php artisan db:seed
 ```
 
+## Frontend
+O projeto desenvolvido com a ferramenta Vue 3, está na raiz do projeto:
+
+```
+cd /app-vue
+```
+
 O projeto estará acessível em `http://localhost:8099`.

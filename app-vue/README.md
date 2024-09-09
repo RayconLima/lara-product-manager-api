@@ -8,6 +8,8 @@ Antes de começar a usar este projeto, é necessário ter as seguintes configura
 
 - Node 18+
 - Typescript
+- TailwindCss
+- Flowbite
 
 ## Instalação
 Siga as etapas abaixo para configurar o projeto em seu ambiente local:

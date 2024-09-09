@@ -190,7 +190,7 @@ return [
     */
 
     'attributes' => [
-        'expiration_date' => 'The The expiration_date field is required.',
+        'expiration_date' => 'The expiration_date field is required.',
         'category_id' => 'The category_id field is required.',
     ],
 

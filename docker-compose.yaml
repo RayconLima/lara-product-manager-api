@@ -61,8 +61,14 @@ services:
             - product-manager-api
     # queue
     queue:
-        image: especializati/laravel9-app
+        build:
+            context: .
+            dockerfile: Dockerfile
         restart: unless-stopped
+        command:
+            - "bash"
+            - "-c"
+            - "php artisan queue:listen"
         volumes:
             - ./:/var/www
         depends_on:

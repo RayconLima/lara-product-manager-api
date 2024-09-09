@@ -5,6 +5,7 @@ namespace App\Http\Requests\Product;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Validation\Rule;
 
 class UpdateProductRequest extends FormRequest
 {
@@ -22,13 +23,13 @@ class UpdateProductRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
+    {    
+
         return [
             'name'              => ['required', 'string', 'max:50'],
             'price'             => ['required', 'numeric'],
             'description'       => ['nullable', 'string', 'max:200'],
-            'image'             => ['nullable', 'string'],
-            'expiration_date'   => ['required', 'date', 'after:now()'],
+            'expiration_date'   => ['required', 'date', 'after:today'],
             'category_id'       => ['required', 'numeric'],
         ];
     }

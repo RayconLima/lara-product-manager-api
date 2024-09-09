@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignIdFor(App\Models\Category::class)->constrained()->cascadeOnDelete();
             $table->string('name')->unique();
             $table->string('description')->nullable();
-            $table->string('image')->nullable();
             $table->double('price');
             $table->date('expiration_date');
             $table->timestamps();

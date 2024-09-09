@@ -22,7 +22,6 @@ class ProductFactory extends Factory
             'category_id'       => $category->id,
             'name'              => $this->faker->name(),
             'description'       => $this->faker->sentence(),
-            'image'             => $this->faker->imageUrl(),
             'price'             => $this->faker->numberBetween(100, 9999),
             'expiration_date'   => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];

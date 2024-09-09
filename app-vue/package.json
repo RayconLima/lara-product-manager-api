@@ -9,10 +9,23 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.4.37"
+    "@kyvg/vue3-notification": "^3.3.0",
+    "@vueuse/core": "^11.0.3",
+    "axios": "^1.7.6",
+    "flowbite": "^2.5.1",
+    "pinia": "^2.2.2",
+    "tailwind": "^4.0.0",
+    "vee-validate": "^4.13.2",
+    "vue": "^3.4.37",
+    "vue-router": "^4.4.3",
+    "yup": "^1.4.0",
+    "yup-locale-pt": "^0.0.9"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.2",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.10",
     "typescript": "^5.5.3",
     "vite": "^5.4.1",
     "vue-tsc": "^2.0.29"

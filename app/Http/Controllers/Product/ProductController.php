@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Product;
 
-use App\Models\Product;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\{Product};
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use App\Exceptions\NotFoundException;
 use App\Http\Resources\ProductResource;
 use App\Http\Requests\Product\{StoreProductRequest, UpdateProductRequest};
-use Illuminate\Support\Str;
 class ProductController extends Controller
 {
     public function index(Request $request)
@@ -27,19 +28,8 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
-        // Gate::authorize('new_product', Product::class);
-        $input = $request->validated();
-        // Handle image upload
-        if ($input['image']) {
-            $image = $request->file('image');
-            $originalFilename = $image->getClientOriginalName();
-            $extension = $image->getClientOriginalExtension();
-            $filename = Str::slug($originalFilename, '-') . '-' . time() . '.' . $extension;
-
-            $imagePath = $image->storeAs('public/products', $filename);
-            $input['image'] = $imagePath;
-        }
-
+        Gate::authorize('new_product', Product::class);
+        $input = $request->validated();        
         $product = Product::create($input);
         return ProductResource::make($product);
     }
@@ -51,12 +41,13 @@ class ProductController extends Controller
         return ProductResource::make($product);
     }
 
-    public function update($productId, UpdateProductRequest $request)
+    public function update(UpdateProductRequest $request, $product)
     {
-        $product = $this->product($productId);
         Gate::authorize('update_product', $product);
-        
-        $product->update($request->validated());
+        $product    =   $this->product($product);
+        $input      =   $request->validated();
+
+        $product->update($input);
         return ProductResource::make($product);
     }
     

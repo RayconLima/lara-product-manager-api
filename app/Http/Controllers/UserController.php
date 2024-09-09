@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\NotFoundException;
-use App\Http\Requests\User\UpdateUserRequest;
+use App\Models\{User, Role};
+use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
-use App\Models\User;
+use App\Exceptions\NotFoundException;
+use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use Gate;
+use Str;
 
 class UserController extends Controller
 {
@@ -24,6 +27,24 @@ class UserController extends Controller
         return UserResource::make($user);
     }
     
+    public function store(StoreUserRequest $request)
+    {
+        $input  = $request->validated();
+
+        if ($request->avatar) {
+            $image              = $input['avatar'];
+            $originalFilename   = $image->getClientOriginalName();
+            $extension          = $image->getClientOriginalExtension();
+            $filename           = Str::slug($originalFilename, '-') . '-' . time() . '.' . $extension;
+            $imagePath          = $image->storeAs('users', $filename);
+            $input['avatar']      = $imagePath;
+        }
+
+        $user   = User::create($input);
+        Gate::authorize('update_user', $user);
+        return UserResource::make($user);   
+    }
+
     public function update(int $userId, UpdateUserRequest $request)
     {
         $user = $this->user($userId);
@@ -38,6 +59,14 @@ class UserController extends Controller
         Gate::authorize('destroy_user', $user);
         $user->delete();
         return response()->noContent(); 
+    }
+
+    public function setRole(User $user, Request $request)
+    {
+        Gate::authorize('update_user', $user);
+        $role = Role::where('id', $request->role_id)->first();
+        $user->roles()->attach($role);
+        return UserResource::make($user);
     }
     
     private function user($userId)
