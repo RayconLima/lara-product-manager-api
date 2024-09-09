@@ -19,7 +19,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white dark:bg-gray-800 dark:border-gray-700" v-for="category in categories"
+                        <tr class="bg-white dark:bg-gray-800 dark:border-gray-700" v-for="category in categories.data"
                             :key="category?.id">
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"></td>
                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
