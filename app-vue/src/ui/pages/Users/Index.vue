@@ -32,8 +32,7 @@
                             <td scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <div class="flex justify-between">
                                     <router-link class="px-1 py-1 font-bold text-white bg-blue-500 rounded hover hover:bg-blue-700" :to="{ name: 'users.show', params: { id: user.id } }">Visualizar</router-link>
-                                    <SetRole :data="user" />
-                                    <button class="ml-2 px-1 py-1 font-bold text-white bg-red-500 rounded hover hover:bg-red-700" v-can="'destroy_user'" @click.stop.prevent="destroyUser(user.id)">Remover</button>
+                                    <button class="ml-2 px-1 py-1 font-bold text-white bg-red-500 rounded hover hover:bg-red-700" v-can="'destroy_user'" @click.prevent="destroyUser(user.id)">Remover</button>
                                 </div>
                             </td>
                         </tr>
@@ -45,7 +44,6 @@
 </template>
 <script>
 import CreateUser from './Create.vue'
-import SetRole from './Role.vue'
 import { computed, onMounted } from 'vue';
 import Spinner from '../../components/Spinner.vue';
 import { useUsersStore } from "../../../store/users";
@@ -57,7 +55,6 @@ export default {
         Spinner,
         Breadcrumb,
         CreateUser,
-        SetRole
     },
     setup() {
         const userStore = useUsersStore();
@@ -67,16 +64,16 @@ export default {
             userStore.getUsers();
         });
 
-        // const destroyUser = (id) => {
-        //     userStore.destroyUser(id).finally(() => {
-        //         useProductStore().getUsers();
-        //     })
-        // }
+        const destroyUser = (id) => {
+            userStore.destroyUser(id).finally(() => {
+                userStore.getUsers();
+            })
+        }
 
         return {
             users,
             userStore,
-            // destroyUser
+            destroyUser
         }
     }
 }
