@@ -10,7 +10,6 @@ export const useMeStore = defineStore('me', {
     async getMe() {
       try {
         return await AuthService.getMe().then(async (response:any) => {
-          console.log(response.data)
           this.user   =   await response.data
         });
       } catch (error) {
