@@ -11,14 +11,15 @@
             <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria</label>
             <select id="category" v-model="form.category_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option value="">Selecione a categoria</option>
-                <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
+                <option v-for="category in categories.data" :key="category.id" :value="category.id">{{ category.name }}</option>
             </select>
         </div>
         <div class="mb-5">
             <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Preço</label>
-            <input id="price" type="text" v-model="form.price"
+            <input id="price" type="text" v-model.lazy="form.price" v-money3="config"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required>
+            
         </div>
         <div class="mb-5">
             <label for="expiration_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Data de validade</label>
@@ -35,11 +36,12 @@
     </Modal>
 </template>
 <script>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import Modal from '../../components/Modal.vue';
 import { notify } from '@kyvg/vue3-notification';
 import { useProductStore } from "../../../store/products";
-import { useCategoryStore } from "../../../store/categories";   
+import { useCategoryStore } from "../../../store/categories";  
+ 
 export default {
     name: 'CreateProduct',
     components: {
@@ -54,11 +56,19 @@ export default {
         const form                      = ref({
             name            : '',
             category_id     : '',
-            price           : '',
+            price           : 0,
             expiration_date : '',
             description     : '',
             image           : null
         });
+        const config = computed(() => ({
+            decimal: ",",
+            thousands: ".",
+            prefix: "R$ ",
+            suffix: "",
+            precision: 2,
+            masked: false, 
+        }))
 
         onMounted(() => {
             useCategoryStore().getCategories();
@@ -68,13 +78,11 @@ export default {
             const file = event.target.files[0];
             if (!file) return;
 
-            // Create a reader for preview and a separate object for sending
             const previewReader = new FileReader();
 
-            // Handle preview
             previewReader.readAsDataURL(file);
             previewReader.onload = (e) => {
-                imagePreview.value = e.target.result; // Update form for preview
+                imagePreview.value = e.target.result;
             };
             form.value.image = file;
         };
@@ -101,9 +109,14 @@ export default {
                 });
         }
 
+        watch(form.value.price, (newPrice, oldPrice) => {
+            console.log({'old-price': oldPrice, 'new-price': newPrice})
+        })
+
         return {
             categories,
             form,
+            config,
             imagePreview,
             newProduct,
             handleImageChange,
