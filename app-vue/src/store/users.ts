@@ -36,14 +36,19 @@ export const useUsersStore = defineStore('users', {
                     this.isLoading = false
                 })
         },
-        async setRole(params: any) {
+        async destroyUser(id: number) {
             await UsersService
-                .setRole(params)
-                .then((response: any) => this.users = response.data.data)
-                .finally(() => {
-                    this.getUsers()
-                    this.isLoading = false
+                .destroyUser(id)
+                .then((response: any) => {
+                    return this.user = response.data.data;
                 })
+        },
+        async setRole(id:number, role_id: number) {
+            await UsersService
+                    .setRole(id, role_id)
+                    .then((response: any) => {
+                        return this.user = response.data.data;
+                    })
         }
     }
 });
