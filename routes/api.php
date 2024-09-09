@@ -17,7 +17,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('logout', LogoutController::class);
 
     Route::apiResource('users', UserController::class);
-    Route::post('user/{user}/set-role', [UserController::class, 'setRole']);
+    Route::put('user/{user}/set-role', [UserController::class, 'setRole']);
     Route::apiResource('roles', RoleController::class);
     Route::apiResource('products', ProductController::class);
     Route::apiResource('product/images', ImageController::class);

@@ -61,11 +61,12 @@ class UserController extends Controller
         return response()->noContent(); 
     }
 
-    public function setRole(User $user, Request $request):void
+    public function setRole(User $user, Request $request)
     {
         Gate::authorize('update_user', $user);
-        $role = Role::where('name', $request->name)->first();
+        $role = Role::where('id', $request->role_id)->first();
         $user->roles()->attach($role);
+        return UserResource::make($user);
     }
     
     private function user($userId)
