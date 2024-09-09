@@ -29,4 +29,22 @@ export default class RolesService extends BaseService {
                 .catch((error: any) => reject(error.response))
         })
     }
+
+    static async destroyUser(id: number) {
+        return new Promise(async (resolve, reject) => {
+            await this.request({ auth: true })
+                .delete(`users/${id}`)
+                .then((response:any) => resolve(response))
+                .catch((error: any) => reject(error.response))
+        })
+    }
+
+    static async setRole(userId:number, roleId: number) {
+        return new Promise(async (resolve, reject) => {
+            await this.request({ auth: true })
+                .put(`user/${userId}/set-role`, {role_id: roleId})
+                .then((response:any) => resolve(response))
+                .catch((error: any) => reject(error.response))
+        })
+    }
 }
